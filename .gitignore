@@ -1,0 +1,44 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# IDE / editor files
+.vscode/
+.idea/
+
+# MacOS files
+.DS_Store
+
+# Logs
+*.log
+
+# Testing
+.pytest_cache/
+
+# Byte-compiled files
+*.pyo
+*.pyd
+
+# mypy / type check cache
+.mypy_cache/
+.dmypy.json
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# FastAPI specific
+*.sqlite3   # if using local DB files
