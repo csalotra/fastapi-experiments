@@ -1,0 +1,21 @@
+POST http://localhost:8000/bands
+Content-Type: application/json
+
+{
+  "name": "Boards of Canada",
+  "genre": "hip-hop",
+  "albums": [
+    {
+      "title": "The Dark Side of the Moon",
+      "release_date": "1973-03-01"
+    },
+    {
+      "title": "Wish You Were Here",
+      "release_date": "1975-09-12"
+    }
+  ]
+}
+
+
+###
+GET http://localhost:8000/bands_with_genre?genre=

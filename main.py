@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from schemas import GenreURLChoices, Band
+from schemas import GenreURLChoices, Band, BandCreate, BandWithID
 
 app = FastAPI()
 
@@ -8,7 +8,7 @@ BANDS = [
   {"id": 2, "name": "The Rolling Stones" , "genre": "Electronic", "albums": [ {"title": "Master of Reality", "release_date": "1971-05-01"} ]},{
   "id": 3, "name": "Led Zeppelin", "genre": "Rock"},
   {"id": 4, "name": "Pink Floyd", "genre": "Progressive Rock"},
-  {"id": 5, "name": "Queen", "genre": "Hip Hop"},
+  {"id": 5, "name": "Queen", "genre": "Hip-Hop"},
 ]
 
 @app.get('/')
@@ -47,11 +47,19 @@ async def bands_by_genre(genre: GenreURLChoices) -> list[dict]:
 async def bamds_by_genre_query(
   genre: GenreURLChoices| None = None,
   has_albums: bool = False                         
-) -> list[Band]:
+) -> list[BandWithID]:
   
-  band_list = [Band(**b) for b in BANDS]
+  band_list = [BandWithID(**b) for b in BANDS]
   if genre:
-    band_list = [b for b in band_list if b.genre.lower() == genre.value.lower()]
+    band_list = [b for b in band_list if b.genre.value.lower() == genre.value.lower()]
   if has_albums:
     band_list = [b for b in band_list if len(b.albums) > 0]
   return band_list
+
+
+@app.post("/bands")
+async def create_band(band_data: BandCreate) -> BandWithID:
+  id = BANDS[-1]["id"] + 1
+  band = BandWithID(id=id, **band_data.model_dump()).model_dump()
+  BANDS.append(band)
+  return band
